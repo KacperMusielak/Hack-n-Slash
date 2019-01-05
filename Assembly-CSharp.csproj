@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Source\ClickToMove.cs" />
+     <Compile Include="Assets\Source\Combat.cs" />
+     <Compile Include="Assets\Source\Mob.cs" />
      <Compile Include="Assets\Source\SmoothFollow.cs" />
      <None Include="Assets\SkeletonData\animations.txt" />
  <Reference Include="UnityEditor.StandardEvents">
