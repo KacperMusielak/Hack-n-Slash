@@ -8,8 +8,11 @@ public class Combat : MonoBehaviour {
     public AnimationClip attack;
 
     public int damage;
+    public int health;
 
     public double impactTime;
+    public bool impacted;
+    public float range;
 	// Use this for initialization
 	void Start ()
     {
@@ -19,7 +22,8 @@ public class Combat : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKey(KeyCode.Space))
+        Debug.Log(health + " Player");
+        if (Input.GetKey(KeyCode.Space) && InRange())
         {
             GetComponent<Animation>().CrossFade("attack");
             ClickToMove.attack = true;
@@ -27,14 +31,16 @@ public class Combat : MonoBehaviour {
             if (opponent != null)
             {
                 transform.LookAt(opponent.transform.position);
-                opponent.GetComponent<Mob>().GetHit(damage);
+
             }
            
 
         }
-        if (!GetComponent<Animation>().IsPlaying("attack"))
+        //if (!GetComponent<Animation>().IsPlaying("attack"))
+        if (GetComponent<Animation>()[attack.name].time > 0.9 * GetComponent<Animation>()[attack.name].length)
         { 
             ClickToMove.attack = false;
+            impacted = false;
         }
 
         Impact();
@@ -42,9 +48,28 @@ public class Combat : MonoBehaviour {
 
     void Impact()
     {
-        if (opponent != null && GetComponent<Animation>().IsPlaying("attack"))
+        if (opponent != null && GetComponent<Animation>().IsPlaying("attack") && !impacted)
         {
             //if(GetComponent<Animation>()[attack.name].time)
+            if((GetComponent<Animation>()[attack.name].time > GetComponent<Animation>()[attack.name].length * impactTime) && (GetComponent<Animation>()[attack.name].time < 0.9 * GetComponent<Animation>()[attack.name].length))
+            {
+                opponent.GetComponent<Mob>().GetHit(damage);
+                impacted = true;
+            }
+        }
+    }
+
+    bool InRange()
+    {
+        return Vector3.Distance(opponent.transform.position, transform.position) <= range;
+    }
+
+    public void GetHit(int damage)
+    {
+        health = health - damage;
+        if (health < 0)
+        {
+            health = 0;
         }
     }
 }

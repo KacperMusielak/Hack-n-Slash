@@ -612,8 +612,13 @@ MonoBehaviour:
   range: 1.5
   player: {fileID: 2132619420}
   controller: {fileID: 1195174627}
+  attack: {fileID: 7400006, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   idle: {fileID: 7400000, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   run: {fileID: 7400002, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
+  die: {fileID: 7400010, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
+  impactTime: 0.35
+  health: 400
+  damage: 50
 --- !u!1 &1983224906
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,5 +834,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   opponent: {fileID: 0}
   attack: {fileID: 7400006, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
-  damage: 10
+  damage: 50
+  health: 100
   impactTime: 0.35
+  impacted: 0
+  range: 2
