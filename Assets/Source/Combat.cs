@@ -6,6 +6,7 @@ public class Combat : MonoBehaviour {
 
     public GameObject opponent;
     public AnimationClip attack;
+    public AnimationClip die;
 
     public int damage;
     public int health;
@@ -13,6 +14,10 @@ public class Combat : MonoBehaviour {
     public double impactTime;
     public bool impacted;
     public float range;
+
+    bool started;
+    bool ended;
+     
 	// Use this for initialization
 	void Start ()
     {
@@ -44,6 +49,7 @@ public class Combat : MonoBehaviour {
         }
 
         Impact();
+        Die();
 	}
 
     void Impact()
@@ -59,6 +65,33 @@ public class Combat : MonoBehaviour {
         }
     }
 
+    public bool IsDead()
+    {
+        return health == 0;
+    }
+
+    void Die()
+    {
+        if (IsDead() && !ended)
+        {
+            if (!started)
+            {
+                ClickToMove.isDying = true;
+                GetComponent<Animation>().CrossFade("die");
+                started = true;
+            }
+            if (started && !GetComponent<Animation>().IsPlaying("die"))
+            {
+                Debug.Log("You have died");
+
+                //health = 100;
+               // ended = true;
+                //started = false;
+               // ClickToMove.isDying = false;
+            }
+
+        }
+    }
     bool InRange()
     {
         return Vector3.Distance(opponent.transform.position, transform.position) <= range;

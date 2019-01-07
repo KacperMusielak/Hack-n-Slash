@@ -52,7 +52,7 @@ public class Mob : MonoBehaviour {
         }
         else
         {
-            Dead();
+            Die();
         }
 
 	}
@@ -87,7 +87,7 @@ public class Mob : MonoBehaviour {
         player.GetComponent<Combat>().opponent = gameObject;
     }
     
-    void Dead()
+    void Die()
     {
         GetComponent<Animation>().CrossFade("die");
 

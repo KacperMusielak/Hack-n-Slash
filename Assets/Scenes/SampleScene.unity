@@ -705,6 +705,64 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1983224906}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2082000598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2082000599}
+  - component: {fileID: 2082000600}
+  m_Layer: 0
+  m_Name: GUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2082000599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2082000598}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.283788, y: 0.56596136, z: 4.974248}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2082000600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2082000598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983bf5b3c6f03644ab63a9e4b82ae825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthFrame: {fileID: 2800000, guid: dd2108b32759fd84785ed23963dd2b17, type: 3}
+  healthFramePosition:
+    serializedVersion: 2
+    x: 0
+    y: 10
+    width: 300
+    height: 30
+  healthBar: {fileID: 2800000, guid: 26f284fe4e3d7e240b04ccd62e94ebec, type: 3}
+  healthBarPosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  horizontalOffset: 0.129
+  verticalOffset: 0.7
+  widthScaling: 0.793
+  heightScaling: 0.41
 --- !u!1001 &2132619415
 Prefab:
   m_ObjectHideFlags: 0
@@ -834,6 +892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   opponent: {fileID: 0}
   attack: {fileID: 7400006, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
+  die: {fileID: 7400010, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   damage: 50
   health: 100
   impactTime: 0.35
