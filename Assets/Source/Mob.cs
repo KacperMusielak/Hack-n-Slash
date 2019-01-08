@@ -16,6 +16,7 @@ public class Mob : MonoBehaviour {
     public AnimationClip die;
 
     public double impactTime = 0.35;
+    public int maxHealth;
     public int health;
     public int damage;
 
@@ -25,6 +26,7 @@ public class Mob : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        health = maxHealth;
         opponent = player.GetComponent<Combat>();
 	}
 	
@@ -48,7 +50,6 @@ public class Mob : MonoBehaviour {
                     impacted = false;
                 }
             }
-            Debug.Log(health);
         }
         else
         {

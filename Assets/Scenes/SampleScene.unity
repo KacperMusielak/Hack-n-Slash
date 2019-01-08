@@ -617,7 +617,8 @@ MonoBehaviour:
   run: {fileID: 7400002, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   die: {fileID: 7400010, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   impactTime: 0.35
-  health: 400
+  maxHealth: 400
+  health: 0
   damage: 50
 --- !u!1 &1983224906
 GameObject:
@@ -745,6 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983bf5b3c6f03644ab63a9e4b82ae825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 2132619421}
   healthFrame: {fileID: 2800000, guid: dd2108b32759fd84785ed23963dd2b17, type: 3}
   healthFramePosition:
     serializedVersion: 2
@@ -763,6 +765,8 @@ MonoBehaviour:
   verticalOffset: 0.7
   widthScaling: 0.793
   heightScaling: 0.41
+  target: {fileID: 0}
+  healthPercentage: 0
 --- !u!1001 &2132619415
 Prefab:
   m_ObjectHideFlags: 0
@@ -894,7 +898,9 @@ MonoBehaviour:
   attack: {fileID: 7400006, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   die: {fileID: 7400010, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   damage: 50
-  health: 100
+  health: 10000
   impactTime: 0.35
   impacted: 0
   range: 2
+  combatEscapeTime: 5
+  countdown: 0

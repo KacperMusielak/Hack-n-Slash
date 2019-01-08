@@ -17,17 +17,19 @@ public class Combat : MonoBehaviour {
 
     bool started;
     bool ended;
+
+    public float combatEscapeTime;
+    public float countdown;
      
 	// Use this for initialization
 	void Start ()
     {
 
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
     {
-        Debug.Log(health + " Player");
         if (Input.GetKey(KeyCode.Space) && InRange())
         {
             GetComponent<Animation>().CrossFade("attack");
@@ -52,6 +54,14 @@ public class Combat : MonoBehaviour {
         Die();
 	}
 
+    void CombatEscapeCountdown()
+    {
+        countdown--;
+        if(countdown == 0)
+        {
+            CancelInvoke("CombatEscapeCountdown");
+        }
+    }
     void Impact()
     {
         if (opponent != null && GetComponent<Animation>().IsPlaying("attack") && !impacted)
@@ -59,6 +69,9 @@ public class Combat : MonoBehaviour {
             //if(GetComponent<Animation>()[attack.name].time)
             if((GetComponent<Animation>()[attack.name].time > GetComponent<Animation>()[attack.name].length * impactTime) && (GetComponent<Animation>()[attack.name].time < 0.9 * GetComponent<Animation>()[attack.name].length))
             {
+                countdown = combatEscapeTime;
+                CancelInvoke("CombatEscapeCountdown");
+                InvokeRepeating("CombatEscapeCountdown", 0, 1);
                 opponent.GetComponent<Mob>().GetHit(damage);
                 impacted = true;
             }

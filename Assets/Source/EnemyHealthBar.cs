@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyHealthBar : MonoBehaviour {
 
+    public Combat player;
     public Texture2D healthFrame;
     public Rect healthFramePosition;
 
@@ -15,6 +16,8 @@ public class EnemyHealthBar : MonoBehaviour {
     public float widthScaling;
     public float heightScaling;
 
+    public Mob target;
+    public float healthPercentage;
 
     // Use this for initialization
     void Start ()
@@ -25,13 +28,27 @@ public class EnemyHealthBar : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		
+        if (player.opponent != null)
+        {
+            target = player.opponent.GetComponent<Mob>();
+            healthPercentage = (float)target.health / (float)target.maxHealth;
+        }
+        else
+        {
+            target = null;
+            healthPercentage = 0;
+        }
+
 	}
 
     void OnGUI()
     {
-        DrawFrame();
-        DrawBar();
+        if (target != null && player.countdown>0)
+        {
+            DrawFrame();
+            DrawBar();
+        }
+
     }
 
     void DrawFrame()
@@ -48,7 +65,7 @@ public class EnemyHealthBar : MonoBehaviour {
     {
         healthBarPosition.x = healthFramePosition.x+horizontalOffset * healthBarPosition.width;
         healthBarPosition.y = healthFramePosition.y+verticalOffset * healthBarPosition.height;
-        healthBarPosition.width = healthFramePosition.width * widthScaling;
+        healthBarPosition.width = healthFramePosition.width * widthScaling * healthPercentage;
         healthBarPosition.height = healthFramePosition.height * heightScaling;
         GUI.DrawTexture(healthBarPosition, healthBar);
     }
