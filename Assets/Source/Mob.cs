@@ -9,6 +9,7 @@ public class Mob : MonoBehaviour {
 
     public Transform player;
     public CharacterController controller;
+    public LevelSystem playerLevel;
 
     public AnimationClip attack;
     public AnimationClip idle;
@@ -94,6 +95,7 @@ public class Mob : MonoBehaviour {
 
         if(GetComponent<Animation>()[die.name].time > GetComponent<Animation>()[die.name].length * 0.9)
         {
+            playerLevel.exp += 100; 
             Destroy(gameObject);
         }
     }

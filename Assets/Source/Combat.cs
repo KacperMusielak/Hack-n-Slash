@@ -8,6 +8,7 @@ public class Combat : MonoBehaviour {
     public AnimationClip attack;
     public AnimationClip die;
 
+    public int maxHealth;
     public int damage;
     public int health;
 
@@ -24,7 +25,7 @@ public class Combat : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-
+        health = maxHealth;
 	}
 
 	// Update is called once per frame

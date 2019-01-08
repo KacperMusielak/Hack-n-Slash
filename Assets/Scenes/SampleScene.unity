@@ -612,6 +612,7 @@ MonoBehaviour:
   range: 1.5
   player: {fileID: 2132619420}
   controller: {fileID: 1195174627}
+  playerLevel: {fileID: 2132619419}
   attack: {fileID: 7400006, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   idle: {fileID: 7400000, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   run: {fileID: 7400002, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
@@ -878,6 +879,20 @@ MonoBehaviour:
   controller: {fileID: 2132619417}
   run: {fileID: 7400002, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   idle: {fileID: 7400000, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
+--- !u!114 &2132619419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2132619416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15023b12af962f14b888130a5dbda9de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  exp: 0
+  player: {fileID: 2132619421}
 --- !u!4 &2132619420 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400016, guid: a2cb09cf998faef4fb7887e15c3608c1,
@@ -897,8 +912,9 @@ MonoBehaviour:
   opponent: {fileID: 0}
   attack: {fileID: 7400006, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   die: {fileID: 7400010, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
-  damage: 50
-  health: 10000
+  maxHealth: 10000
+  damage: 200
+  health: 0
   impactTime: 0.35
   impacted: 0
   range: 2
