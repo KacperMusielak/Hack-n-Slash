@@ -53,12 +53,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DungeonModules\Scripts\DoorAOpen.cs" />
+     <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <Compile Include="Assets\Source\ClickToMove.cs" />
      <Compile Include="Assets\Source\Combat.cs" />
      <Compile Include="Assets\Source\EnemyHealthBar.cs" />
      <Compile Include="Assets\Source\LevelSystem.cs" />
      <Compile Include="Assets\Source\Mob.cs" />
      <Compile Include="Assets\Source\SmoothFollow.cs" />
+     <Compile Include="Assets\Source\SpecialAttack.cs" />
+     <Compile Include="Assets\Source\Strike.cs" />
      <None Include="Assets\SkeletonData\animations.txt" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/Kacper/Documents/HackNSlash/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

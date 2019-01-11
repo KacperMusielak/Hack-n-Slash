@@ -14,6 +14,7 @@ public class Combat : MonoBehaviour {
 
     public double impactTime;
     public bool impacted;
+    public bool inAction;
     public float range;
 
     bool started;
@@ -21,7 +22,8 @@ public class Combat : MonoBehaviour {
 
     public float combatEscapeTime;
     public float countdown;
-     
+
+    public bool specialAttack; 
 	// Use this for initialization
 	void Start ()
     {
@@ -31,30 +33,81 @@ public class Combat : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKey(KeyCode.Space) && InRange())
+        if (Input.GetKeyDown(KeyCode.Space) && !specialAttack)
         {
-            GetComponent<Animation>().CrossFade("attack");
-            ClickToMove.attack = true;
-
-            if (opponent != null)
+            inAction = true;
+        }
+        if (inAction)
+        {
+            if (attackMob(0, 1, KeyCode.Space, null, 0, true))
             {
-                transform.LookAt(opponent.transform.position);
 
             }
-           
-
-        }
-        //if (!GetComponent<Animation>().IsPlaying("attack"))
-        if (GetComponent<Animation>()[attack.name].time > 0.9 * GetComponent<Animation>()[attack.name].length)
-        { 
-            ClickToMove.attack = false;
-            impacted = false;
+            else
+            {
+                inAction = false;
+            }
         }
 
-        Impact();
         Die();
 	}
 
+    public bool attackMob(int stunSeconds, double scaledDamage, KeyCode key, GameObject particleEffect, int projectile, bool opponentBased)
+    {
+        if (opponentBased)
+        {
+            if (Input.GetKey(key) && InRange())
+            {
+                GetComponent<Animation>().CrossFade("attack");
+                ClickToMove.attack = true;
+
+                if (opponent != null)
+                {
+                    transform.LookAt(opponent.transform.position);
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetKey(key) && InRange())
+            {
+                GetComponent<Animation>().CrossFade("attack");
+                ClickToMove.attack = true;
+
+                if (opponent != null)
+                {
+                    transform.LookAt(ClickToMove.position);
+                }
+            }
+        }
+
+        //if (!GetComponent<Animation>().IsPlaying("attack"))
+        if (GetComponent<Animation>()[attack.name].time > 0.9 * GetComponent<Animation>()[attack.name].length)
+        {
+            ClickToMove.attack = false;
+            impacted = false;
+            if (specialAttack)
+            {
+                specialAttack = false;
+            }
+            return false;
+        }
+
+        Impact(stunSeconds, scaledDamage, particleEffect, projectile, opponentBased);
+        return true;
+    }
+
+    public void resetAttack()
+    {
+        ClickToMove.attack = false;
+        impacted = false;
+        GetComponent<Animation>().Stop("attack");
+
+    }
+    void stunMob()
+    {
+
+    }
     void CombatEscapeCountdown()
     {
         countdown--;
@@ -63,9 +116,9 @@ public class Combat : MonoBehaviour {
             CancelInvoke("CombatEscapeCountdown");
         }
     }
-    void Impact()
+    void Impact(int stunSeconds, double scaledDamage, GameObject particleEffect, int projectile, bool opponentBased)
     {
-        if (opponent != null && GetComponent<Animation>().IsPlaying("attack") && !impacted)
+        if ((!opponentBased || opponent != null) && GetComponent<Animation>().IsPlaying("attack") && !impacted)
         {
             //if(GetComponent<Animation>()[attack.name].time)
             if((GetComponent<Animation>()[attack.name].time > GetComponent<Animation>()[attack.name].length * impactTime) && (GetComponent<Animation>()[attack.name].time < 0.9 * GetComponent<Animation>()[attack.name].length))
@@ -73,7 +126,23 @@ public class Combat : MonoBehaviour {
                 countdown = combatEscapeTime;
                 CancelInvoke("CombatEscapeCountdown");
                 InvokeRepeating("CombatEscapeCountdown", 0, 1);
-                opponent.GetComponent<Mob>().GetHit(damage);
+                opponent.GetComponent<Mob>().GetHit(damage*scaledDamage);
+                if (specialAttack)
+                {
+                    opponent.GetComponent<Mob>().getStun(stunSeconds);
+                }
+                Quaternion rot = transform.rotation;
+                rot.x = 0f;
+                rot.z = 0f;
+
+                if (projectile > 0)
+                {
+                    Instantiate(Resources.Load("Projectile"), new Vector3(transform.position.x, transform.position.y+1, transform.position.z), rot);
+                }
+                if (particleEffect != null)
+                {
+                    Instantiate(particleEffect, new Vector3(opponent.transform.position.x, opponent.transform.position.y + 1.5f, opponent.transform.position.z), Quaternion.identity);
+                }
                 impacted = true;
             }
         }
@@ -83,6 +152,8 @@ public class Combat : MonoBehaviour {
     {
         return health == 0;
     }
+
+
 
     void Die()
     {

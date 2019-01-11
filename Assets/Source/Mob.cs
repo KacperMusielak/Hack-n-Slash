@@ -6,6 +6,7 @@ public class Mob : MonoBehaviour {
 
     public float speed;
     public float range;
+    private int stunTime;
 
     public Transform player;
     public CharacterController controller;
@@ -34,23 +35,32 @@ public class Mob : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+
         if (!IsDead())
         {
-            if (!InRange())
+            if (stunTime <= 0)
             {
-                Chase();
+                if (!InRange())
+                {
+                    Chase();
+                }
+                else
+                {
+                    //GetComponent<Animation>().CrossFade("idle");
+                    GetComponent<Animation>().CrossFade("attack");
+                    Attack();
+
+                    if ((GetComponent<Animation>()[attack.name].time > 0.9 * GetComponent<Animation>()[attack.name].length))
+                    {
+                        impacted = false;
+                    }
+                }
             }
             else
             {
-                //GetComponent<Animation>().CrossFade("idle");
-                GetComponent<Animation>().CrossFade("attack");
-                Attack();
 
-                if((GetComponent<Animation>()[attack.name].time > 0.9 * GetComponent<Animation>()[attack.name].length))
-                {
-                    impacted = false;
-                }
             }
+
         }
         else
         {
@@ -58,6 +68,21 @@ public class Mob : MonoBehaviour {
         }
 
 	}
+    public void getStun(int seconds)
+    {
+        CancelInvoke("stunCountDown");
+        stunTime += seconds + 1;
+        InvokeRepeating("stunCountDown", 0f, 1f);
+    }
+
+    void stunCountDown()
+    {
+        stunTime--;
+        if(stunTime == 0)
+        {
+            CancelInvoke("stunCountDown");
+        }
+    }
 
     void Attack()
     {
@@ -112,9 +137,9 @@ public class Mob : MonoBehaviour {
         }
 
     }
-    public void GetHit(int damage)
+    public void GetHit(double damage)
     {
-        health = health - damage;
+        health = health - (int)damage;
         if (health < 0)
         {
             health = 0;

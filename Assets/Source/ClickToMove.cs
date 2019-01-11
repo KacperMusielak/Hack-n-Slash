@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClickToMove : MonoBehaviour {
 
-    private Vector3 position;
+    public static Vector3 position;
     public float speed;
     public CharacterController controller;
 
