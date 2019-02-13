@@ -60,11 +60,7 @@ public class Combat : MonoBehaviour {
             {
                 GetComponent<Animation>().CrossFade("attack");
                 ClickToMove.attack = true;
-
-                if (opponent != null)
-                {
-                    transform.LookAt(opponent.transform.position);
-                }
+                transform.LookAt(opponent.transform.position);
             }
         }
         else
@@ -76,7 +72,7 @@ public class Combat : MonoBehaviour {
 
                 if (opponent != null)
                 {
-                    transform.LookAt(ClickToMove.position);
+                    transform.LookAt(ClickToMove.cursorPosition);
                 }
             }
         }
@@ -137,7 +133,13 @@ public class Combat : MonoBehaviour {
 
                 if (projectile > 0)
                 {
-                    Instantiate(Resources.Load("Projectile"), new Vector3(transform.position.x, transform.position.y+1, transform.position.z), rot);
+                    float rotOffset = 0;
+                    for(int i = 0; i<projectile; i++)
+                    {
+                        //Instantiate(Resources.Load("Projectile"), new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), new Quaternion(rot.x, (rot.y+(float)i*0.1f)-rotOffset, rot.z, rot.w));
+                        Instantiate(Resources.Load("Projectile"), new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), new Quaternion(rot.x, rot.y, rot.z, rot.w));
+                    }
+                    
                 }
                 if (particleEffect != null)
                 {

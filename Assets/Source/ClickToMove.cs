@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ClickToMove : MonoBehaviour {
 
-    public static Vector3 position;
+    private static Vector3 position;
+    public static Vector3 cursorPosition;
     public float speed;
     public CharacterController controller;
 
@@ -20,7 +21,9 @@ public class ClickToMove : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        locateCursor();
         if (!attack && !isDying)
         {
             if (Input.GetMouseButton(0))
@@ -50,7 +53,22 @@ public class ClickToMove : MonoBehaviour {
             //if (hit.collider.tag != "Player")
             if (hit.collider.tag != "Player" && hit.collider.tag != "Enemy")
             {
-                position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                position = hit.point;
+            }
+        }
+    }
+
+    void locateCursor()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, 1000))
+        {
+            //if (hit.collider.tag != "Player")
+            if (hit.collider.tag != "Player" && hit.collider.tag != "Enemy")
+            {
+                cursorPosition = hit.point;
             }
         }
     }
